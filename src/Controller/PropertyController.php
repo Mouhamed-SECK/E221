@@ -41,9 +41,10 @@ class PropertyController extends AbstractController
     /**
      * @Route("/biens/{slug}-{id}", name="property.show", requirements={"slug": "[a-z0-9\-]*"})
      */
-    public function show(Property $property, string $slug): Response
+    public function show(int $id, string $slug): Response
     {
-        if ($property->getSlug() == $slug) {
+        $property = $this->repository->find($id);
+        if ($property->getSlug() !== $slug) {
             return $this->redirectToRoute('property.show', [
                 'id' => $property->getId(),
                 'slug' => $property->getSlug()
