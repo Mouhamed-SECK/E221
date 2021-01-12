@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
 
@@ -13,12 +15,13 @@ class Property
 
     const USAGE_TYPE = [
         0 => 'Bureau',
-        2 => 'Logement'
+        1 => 'Logement'
     ];
 
     public function __construct()
     {
         $this->created_at = new \DateTime();
+        $this->images = new ArrayCollection();
     }
     /**
      * @ORM\Id
@@ -91,6 +94,16 @@ class Property
      * @ORM\Column(type="datetime")
      */
     private $created_at;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CoverImage;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="property", orphanRemoval=true)
+     */
+    private $images;
 
     public function getId(): ?int
     {
@@ -261,5 +274,47 @@ class Property
     public function getSlug(): string
     {
         return (new Slugify())->slugify($this->title); // hello-world
+    }
+
+    public function getCoverImage(): ?string
+    {
+        return $this->CoverImage;
+    }
+
+    public function setCoverImage(?string $CoverImage): self
+    {
+        $this->CoverImage = $CoverImage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProperty() === $this) {
+                $image->setProperty(null);
+            }
+        }
+
+        return $this;
     }
 }
