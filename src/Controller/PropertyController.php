@@ -3,10 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Property;
+use App\Form\PropertyType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\PropertyRepository;
+
+use Doctrine\ORM\EntityManagerInterface;
+
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 
 class PropertyController extends AbstractController
 {
@@ -26,15 +32,11 @@ class PropertyController extends AbstractController
      */
     public function index(): Response
     {
-        $property = $this->repository->findAllVisible();
-        $property[0]->setIsLoan(false);
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-        dump($property);
-
+        $properties = $this->repository->findAllVisible();
         return $this->render('property/index.html.twig', [
             'controller_name' => 'PropertyController',
-            'current_menu' => 'properties'
+            'current_menu' => 'properties',
+            'properties' => $properties
         ]);
     }
 
@@ -54,6 +56,31 @@ class PropertyController extends AbstractController
         return $this->render('property/show.html.twig', [
             'current_menu' => 'dd',
             'property' => $property
+        ]);
+    }
+
+    /**
+     * @Route("biens/new", name="property.create")
+     */
+    public function create(Request $request, EntityManagerInterface $manager)
+    {
+        $property = new Property();
+        $form = $this->createForm(PropertyType::class, $property);
+
+        $form->handleRequest($request);
+
+        dump($property);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $property->setUsageType(0);
+            $property->setIsLoan(false);
+            $manager->persist($property);
+            $manager->flush();
+        }
+
+        return $this->render('property/new.html.twig', [
+            'form' => $form->createView(),
+            'current_menu' => 'properties',
         ]);
     }
 }
