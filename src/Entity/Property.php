@@ -14,7 +14,7 @@ class Property
 {
 
     const USAGE_TYPE = [
-        0 => 'Bureau',
+        0 => 'Burreau',
         1 => 'Logement'
     ];
 
@@ -316,5 +316,10 @@ class Property
         }
 
         return $this;
+    }
+
+    public function getStringUsageType(): string
+    {
+        return self::USAGE_TYPE[$this->usageType];
     }
 }

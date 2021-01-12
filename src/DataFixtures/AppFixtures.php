@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Image;
 use App\Entity\Property;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -36,6 +37,15 @@ class AppFixtures extends Fixture
                 ->setPrice(mt_rand(100000, 20000000))
                 ->setCoverImage($coverImage)
                 ->setIsLoan(false);
+
+            for ($j = 0; $j < mt_rand(2, 5); $j++) {
+                $image = new Image();
+                $image->setUrl($faker->imageUrl())
+                    ->setCaption($faker->sentence())
+                    ->setProperty($property);
+
+                $manager->persist($image);
+            }
 
             $manager->persist($property);
         }
