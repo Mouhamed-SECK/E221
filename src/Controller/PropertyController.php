@@ -60,7 +60,7 @@ class PropertyController extends AbstractController
     }
 
     /**
-     * @Route("biens/new", name="property.create")
+     * @Route("biens/demande-de-gestion", name="property.create")
      */
     public function create(Request $request, EntityManagerInterface $manager)
     {

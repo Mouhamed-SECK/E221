@@ -276,7 +276,9 @@
 				{% for property in properties %}
 					<div class="col-lg-4 col-md-6 mix all house">
 						<div class="property-item">
-							<div class="pi-pic set-bg" data-setbg="img/property/property-1.jpg"></div>
+							<div class="pi-pic set-bg" data-setbg="img/property/property-1.jpg">
+								<div class="label c-magenta">{{property.stringUsageType}}</div>
+							</div>
 							<div class="pi-text">
 
 								<div class="pt-price">
@@ -312,4 +314,6 @@
 
 		</div>
 	</div>
-</section>{% endblock %}
+</section>
+
+{% include "footer.html.twig" %}{% endblock %}
