@@ -11,10 +11,10 @@
 		<div
 			class="property-pic-slider owl-carousel">
 			{# {% for image in property.images %}
-																						<div class="ps-item">
-																							<div class="ps-item-inner large-item set-bg" data-setbg="{{image.url}}"></div>
-																						</div>
-																					{% endfor %} #}
+																																								<div class="ps-item">
+																																									<div class="ps-item-inner large-item set-bg" data-setbg="{{image.url}}"></div>
+																																								</div>
+																																							{% endfor %} #}
 
 			<div class="ps-item">
 				<div class="ps-item-inner large-item set-bg" data-setbg="/img/property/slider/ps-1.jpg"></div>
@@ -130,6 +130,8 @@
 								</div>
 							</div>
 						</div>
+
+						<a href="{{path('property.edit', {id: property.id, slug: property.slug})}}" class="btn btn-primary">Edit</a>
 
 						<div class="pd-widget">
 							<h4>Localisation</h4>
