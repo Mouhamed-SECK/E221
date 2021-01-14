@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Property;
 use App\Form\PropertyType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,15 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PropertyController extends AbstractController
 {
-    /**
-     * @var PropertyRepository
-     */
+
     private $repository;
+    private $manager;
 
 
-    public function __construct(PropertyRepository $repository)
+    public function __construct(PropertyRepository $repository, EntityManagerInterface $manager)
     {
         $this->repository = $repository;
+        $this->manager = $manager;
     }
 
     /**
@@ -39,6 +40,35 @@ class PropertyController extends AbstractController
             'properties' => $properties
         ]);
     }
+
+
+
+    /**
+     * @Route("/biens/new", name="property.create")
+     */
+    public function create(Request $request, EntityManagerInterface $manager)
+    {
+        $property = new Property();
+        $form = $this->createForm(PropertyType::class, $property);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($property->getImages() as $image) {
+                $image->setProperty($property);
+                $manager->persist($image);
+            }
+            $property->setUsageType(0);
+            $property->setIsLoan(false);
+            $manager->persist($property);
+            $manager->flush();
+        }
+
+        return $this->render('property/new.html.twig', [
+            'form' => $form->createView(),
+
+        ]);
+    }
+
 
     /**
      * @Route("/biens/{slug}-{id}", name="property.show", requirements={"slug": "[a-z0-9\-]*"})
@@ -58,29 +88,29 @@ class PropertyController extends AbstractController
             'property' => $property
         ]);
     }
-
     /**
-     * @Route("biens/demande-de-gestion", name="property.create")
+     * @Route("/biens/{slug}-{id}/edit" , name="property.edit" , requirements={"slug": "[a-z0-9\-]*"})
      */
-    public function create(Request $request, EntityManagerInterface $manager)
+    public function edit(int $id, string $slug, Request $request): Response
     {
-        $property = new Property();
-        $form = $this->createForm(PropertyType::class, $property);
+        $property = $this->repository->find($id);
 
+        $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
 
-        dump($property);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($property->getImages() as $image) {
+                $image->setProperty($property);
+                $this->manager->persist($image);
+            }
             $property->setUsageType(0);
             $property->setIsLoan(false);
-            $manager->persist($property);
-            $manager->flush();
+            $this->manager->persist($property);
+            $this->manager->flush();
         }
-
-        return $this->render('property/new.html.twig', [
+        return $this->render('property/edit.html.twig', [
+            'property' => $property,
             'form' => $form->createView(),
-            'current_menu' => 'properties',
         ]);
     }
 }

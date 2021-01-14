@@ -6,6 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Cocur\Slugify\Slugify;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass=PropertyRepository::class)
@@ -32,11 +35,13 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=20, minMessage="Votre introduction doit faire plus de 20 caractéres")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=100, minMessage="Votre introduction doit faire plus de 20 caractéres")
      */
     private $description;
 
@@ -97,11 +102,13 @@ class Property
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url()
      */
     private $CoverImage;
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="property", orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $images;
 
