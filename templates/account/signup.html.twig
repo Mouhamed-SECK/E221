@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="/css/account.css">
+{% endblock %}
+
+
+{% block title %}Login
+
+{% endblock %}
+
+{% block body %}
+	<div class="main">
+
+		<section
+			class="signup">
+			<!-- <img src="images/signup-bg.jpg" alt=""> -->
+			<div class="container" style='  width: 600px; positon: relative; margin:40px auto;'>
+				<div class="signup-content">
+					<div id="signup-form" class="signup-form">
+						<h2 class="form-title">Creer un compte</h2>
+						{{form_start(form)}}
+						{{form_widget(form)}}
+
+						<div class="form-group">
+							<input type="submit" name="submit" id="submit" class="site-btn w-100" value="Sign up"/>
+						</div>
+					</div>
+					<p class="loginhere">
+						Déja un compte ?
+					</p>
+
+					<a href="#" class="loginhere-link">Conectez vous ici</a>
+					{{form_end(form)}}
+				</p>
+			</div>
+		</div>
+	</section>
+
+</div>
+
+{% include "footer.html.twig" %}{% endblock %}
