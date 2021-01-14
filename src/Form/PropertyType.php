@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Property;
+use ApplicationType;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -13,20 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
-class PropertyType extends AbstractType
+class PropertyType extends ApplicationType
 {
 
-    private function getConfiguration($label, $placeholder, $cssClass = null)
-    {
-        return  [
-            'label' => $label,
-            'attr' => [
-                'placeholder' => $placeholder,
-                'class' =>  $cssClass,
-            ]
 
-        ];
-    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
