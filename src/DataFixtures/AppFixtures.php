@@ -4,12 +4,21 @@ namespace App\DataFixtures;
 
 use App\Entity\Image;
 use App\Entity\Property;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $enocder)
+    {
+        $this->encoder = $enocder;
+    }
+
     public function load(ObjectManager $manager)
     {
         // $product = new Product();
@@ -17,12 +26,30 @@ class AppFixtures extends Fixture
 
         $faker = Factory::create('Fr-fr');
 
+        $users = [];
+        for ($i = 1; $i <= 10; $i++) {
+            $user = new User();
+
+            $hash = $this->encoder->encodePassword($user, 'password');
+
+            $user->setFirstName($faker->firstName())
+                ->setName($faker->name())
+                ->setEmail($faker->email())
+                ->setHash($hash);
+
+            $manager->persist($user);
+            $users[] = $user;
+        }
+
+
         for ($i = 0; $i <  30; $i++) {
 
             $title =  $faker->sentence();
             $coverImage = $faker->imageUrl(1000, 350);
             $content = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>';
             $address =  $faker->address();
+
+            $user = $users[mt_rand(0, count($users) - 1)];
 
             $property = new Property();
             $property->setTitle($title)
@@ -36,7 +63,8 @@ class AppFixtures extends Fixture
                 ->setSurface(mt_rand(50, 300))
                 ->setPrice(mt_rand(100000, 20000000))
                 ->setCoverImage($coverImage)
-                ->setIsLoan(false);
+                ->setIsLoan(false)
+                ->setPropertyOwner($user);
 
             for ($j = 0; $j < mt_rand(2, 5); $j++) {
                 $image = new Image();
