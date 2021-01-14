@@ -112,6 +112,12 @@ class Property
      */
     private $images;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $propertyOwner;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -328,5 +334,17 @@ class Property
     public function getStringUsageType(): string
     {
         return self::USAGE_TYPE[$this->usageType];
+    }
+
+    public function getPropertyOwner(): ?User
+    {
+        return $this->propertyOwner;
+    }
+
+    public function setPropertyOwner(?User $propertyOwner): self
+    {
+        $this->propertyOwner = $propertyOwner;
+
+        return $this;
     }
 }
