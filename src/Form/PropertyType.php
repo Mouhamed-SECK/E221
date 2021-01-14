@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Property;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -79,6 +81,15 @@ class PropertyType extends AbstractType
                 'CoverImage',
                 UrlType::class,
                 $this->getConfiguration('Imagel', 'Entrez l\'url de l\'image')
+            )
+            ->add(
+                'images',
+                CollectionType::class,
+                [
+                    'entry_type' => ImageType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true
+                ]
             );
     }
 
