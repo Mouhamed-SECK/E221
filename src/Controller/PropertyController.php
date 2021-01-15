@@ -14,6 +14,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class PropertyController extends AbstractController
 {
@@ -44,7 +46,8 @@ class PropertyController extends AbstractController
 
 
     /**
-     * @Route("/biens/new", name="property.create")
+     * @IsGranted("ROLE_USER")
+     * @Route("/biens/demande-de-gestion", name="property.create") 
      */
     public function create(Request $request, EntityManagerInterface $manager)
     {
@@ -92,6 +95,7 @@ class PropertyController extends AbstractController
     }
     /**
      * @Route("/biens/{slug}-{id}/edit" , name="property.edit" , requirements={"slug": "[a-z0-9\-]*"})
+     * @Security("is_granted('ROLE_USER') and user === property.getPropertyOwner()", message="Cette annonce ne vous appartient pas vous ne pouvez pas la modifier")
      */
     public function edit(int $id, string $slug, Request $request): Response
     {

@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class AccountController extends AbstractController
 {
@@ -61,10 +63,11 @@ class AccountController extends AbstractController
 
     /**
      * @Route("/account", name="account.index")
+     * @IsGranted("ROLE_USER")
      */
     public function myAcccount()
     {
-        return $this->render('user/ .html.twig', [
+        return $this->render('user/index.html.twig', [
             'user' => $this->getUser()
         ]);
     }

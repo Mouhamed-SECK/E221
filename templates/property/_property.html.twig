@@ -28,12 +28,14 @@
 					<i class="fa fa-bed"></i>
 					{{property.badrooms}}</li>
 
+				{% if app.user and app.user == property.getPropertyOwner %}
+					<li>
+						<a href="{{path('property.edit', {id: property.id, slug: property.slug})}}">
+							<i class="fa fa-pencil text-warning h1"></i>
+						</a>
+					</li>
+				{% endif %}
 
-				<li>
-					<a href="{{path('property.edit', {id: property.id, slug: property.slug})}}">
-						<i class="fa fa-pencil text-warning h1"></i>
-					</a>
-				</li>
 			</ul>
 
 		</div>
