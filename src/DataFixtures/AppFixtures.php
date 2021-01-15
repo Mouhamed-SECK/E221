@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Image;
 use App\Entity\Property;
+use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -25,6 +26,19 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
 
         $faker = Factory::create('Fr-fr');
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser = new User();
+        $adminUser->setFirstName('Momo')
+            ->setName('Seck')
+            ->setEmail('momoSeck@gmail.com')
+            ->setHash($this->encoder->encodePassword($adminUser, 'admin'))
+            ->addUserRole($adminRole);
+
+        $manager->persist($adminUser);
+
 
         $users = [];
         for ($i = 1; $i <= 10; $i++) {
