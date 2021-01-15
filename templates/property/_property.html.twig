@@ -1,0 +1,41 @@
+<div class="col-lg-4 col-md-6">
+	<div class="property-item">
+		<div class="pi-pic set-bg" data-setbg="img/property/property-1.jpg">
+			<div class="label c-magenta">En Location</div>
+		</div>
+		<div class="pi-text">
+
+			<div class="pt-price">
+				{{property.formattedPrice}}
+				FCFA
+				<span>/ Mois</span>
+			</div>
+			<h5>
+				<a href="{{path('property.show', {id: property.id, slug: property.slug})}}">
+					{{property.title}}</a>
+			</h5>
+			<p>
+				<span class="icon_pin_alt"></span>
+				{{property.city}}
+				{{property.address}}</p>
+			<ul>
+				<li>
+					<i class="fa fa-object-group"></i>
+					{{property.surface}}
+					m2</li>
+
+				<li>
+					<i class="fa fa-bed"></i>
+					{{property.badrooms}}</li>
+
+
+				<li>
+					<a href="{{path('property.edit', {id: property.id, slug: property.slug})}}">
+						<i class="fa fa-pencil text-warning h1"></i>
+					</a>
+				</li>
+			</ul>
+
+		</div>
+	</div>
+</div>

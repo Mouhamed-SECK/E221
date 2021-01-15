@@ -61,11 +61,13 @@ class PropertyController extends AbstractController
             $property->setIsLoan(false);
             $manager->persist($property);
             $manager->flush();
+            $property->setPropertyOwner($this->getUser());
+
+            return $this->redirectToRoute('user.account');
         }
 
         return $this->render('property/new.html.twig', [
             'form' => $form->createView(),
-
         ]);
     }
 
@@ -103,6 +105,7 @@ class PropertyController extends AbstractController
                 $image->setProperty($property);
                 $this->manager->persist($image);
             }
+
             $property->setUsageType(0);
             $property->setIsLoan(false);
             $this->manager->persist($property);
