@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+
+{% block title %}Page Non trouvé
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5 mx-auto">
+		<h1 class="h3">Oupps La page que vous recherchez n'existe pas</h1>
+		<p>Vous pouvez retournez à l'acceuil
+		</p>
+
+		<a href="{{path('home')}}" class="site-btn">Acceuil</a>
+
+		<img class="w-50 d-block" src="/img/404.svg" alt="">
+	</div>
+{% endblock %}
