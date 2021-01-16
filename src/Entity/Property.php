@@ -25,6 +25,7 @@ class Property
     {
         $this->created_at = new \DateTime();
         $this->images = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
     /**
      * @ORM\Id
@@ -117,6 +118,11 @@ class Property
      * @ORM\JoinColumn(nullable=false)
      */
     private $propertyOwner;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="property")
+     */
+    private $bookings;
 
     public function getId(): ?int
     {
@@ -344,6 +350,36 @@ class Property
     public function setPropertyOwner(?User $propertyOwner): self
     {
         $this->propertyOwner = $propertyOwner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getProperty() === $this) {
+                $booking->setProperty(null);
+            }
+        }
 
         return $this;
     }
