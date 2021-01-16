@@ -111,7 +111,8 @@ class PropertyController extends AbstractController
             }
 
             $property->setUsageType(0);
-            $property->setIsLoan(false);
+            $property->setStatus(0);
+
             $this->manager->persist($property);
             $this->manager->flush();
         }

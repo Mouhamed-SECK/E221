@@ -21,6 +21,13 @@ class Property
         1 => 'Logement'
     ];
 
+    const STATUS = [
+        0 => 'Nouvelle Demande',
+        1 => 'Demande Accepté',
+        2 => 'En Reflexion',
+        3 => 'En Location'
+    ];
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -91,10 +98,6 @@ class Property
      */
     private $duration;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default": false})
-     */
-    private $isLoan;
 
     /**
      * @ORM\Column(type="datetime")
@@ -123,6 +126,11 @@ class Property
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="property")
      */
     private $bookings;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $status;
 
     public function getId(): ?int
     {
@@ -261,17 +269,6 @@ class Property
         return $this;
     }
 
-    public function getIsLoan(): ?bool
-    {
-        return $this->isLoan;
-    }
-
-    public function setIsLoan(bool $isLoan): self
-    {
-        $this->isLoan = $isLoan;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -382,5 +379,22 @@ class Property
         }
 
         return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getStausValue(): string
+    {
+        return self::STATUS[$this->status];
     }
 }

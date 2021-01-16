@@ -77,7 +77,7 @@ class AppFixtures extends Fixture
                 ->setSurface(mt_rand(50, 300))
                 ->setPrice(mt_rand(100000, 20000000))
                 ->setCoverImage($coverImage)
-                ->setIsLoan(false)
+                ->setStatus(mt_rand(0, 3))
                 ->setPropertyOwner($user);
 
             for ($j = 0; $j < mt_rand(2, 5); $j++) {
