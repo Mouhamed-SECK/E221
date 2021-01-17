@@ -8,20 +8,14 @@
 
 	<!-- Property Details Section Begin -->
 	<section class="property-details-section">
-		<div
-			class="property-pic-slider owl-carousel">
-			{# {% for image in property.images %}
-																																														<div class="ps-item">
-																																															<div class="ps-item-inner large-item set-bg" data-setbg="{{image.url}}"></div>
-																																														</div>
-																																													{% endfor %} #}
+		<div class="property-pic-slider owl-carousel">
+			{% for image in property.images %}
+				<div class="ps-item">
+					<div class="ps-item-inner large-item set-bg" data-setbg="{{image.url}}"></div>
+				</div>
+			{% endfor %}
 
-			<div class="ps-item">
-				<div class="ps-item-inner large-item set-bg" data-setbg="/img/property/slider/ps-1.jpg"></div>
-			</div>
-			<div class="ps-item">
-				<div class="ps-item-inner large-item set-bg" data-setbg="/img/property/slider/ps-1.jpg"></div>
-			</div>
+
 		</div>
 		<div class="container">
 			<div class="row">
