@@ -10,6 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Booking
 {
+    const BOOKING_STATUS = [
+        0 => 'En cours',
+        1 => 'Refusé',
+        2 => 'Accépté'
+    ];
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -33,6 +43,11 @@ class Booking
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $bookingStatus;
 
     public function getId(): ?int
     {
@@ -73,5 +88,21 @@ class Booking
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getBookingStatus(): ?int
+    {
+        return $this->bookingStatus;
+    }
+
+    public function setBookingStatus(int $bookingStatus): self
+    {
+        $this->bookingStatus = $bookingStatus;
+
+        return $this;
+    }
+    public function getBookingStatusValue()
+    {
+        return self::BOOKING_STATUS[$this->bookingStatus];
     }
 }

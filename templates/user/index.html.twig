@@ -79,6 +79,7 @@
 							<strong>{{user.name}}</strong>
 							n'a auccun bien pour le moment faire une demande de gestion
 							<a href="{{path('property.create')}}">ici</a>.</p>
+
 					{% endif %}
 
 				</div>
@@ -88,22 +89,50 @@
 
 			<div class="tabs_item">
 
+
+				{% if user.bookings | length > 0 %}
+					<div class="row">
+						{% for booking in app.user.bookings %}
+							<div class="col-lg-4 col-md-6">
+								<div class="property-item">
+									<div class="pi-pic set-bg" data-setbg="{{booking.property.coverImage}}">
+										<div class="label c-magenta">{{booking.property.stringUsageType}}</div>
+									</div>
+									<div class="pi-text">
+										<div class="pt-price">
+											{{booking.property.formattedPrice}}
+											FCFA
+											<span>/ Mois</span>
+										</div>
+										<h5>
+											<a href="{{path('property.show', {id: booking.property.id, slug: booking.property.slug})}}">
+												{{booking.property.title}}</a>
+										</h5>
+										<p>
+											<span class="icon_pin_alt"></span>
+											{{booking.property.city}}
+											{{booking.property.address}}</p>
+										<p>Status de la reservation :
+											<span id='status success'>{{booking.bookingStatusValue}}
+											</span>
+										</p>
+									</p>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
 				<h4>Liste de vos Réservations</h4>
 				<p class="mt-4">Auccune Réservation pour le moment voir notre
 					<a href="{{path('property.index')}}">catalogue</a>.</p>
-			</div>
+			{% endif %}
+
 		</div>
-		<!-- / tabs_item -->
-
-
 	</div>
-	<!-- / tab_content -->
+	<!-- / tabs_item -->
+
+
 </div>
-<!-- / tab -->
-
-{% include "footer.html.twig" %}
-
-
-{% block javascripts %}
-	<script src="/js/tab.js"></script>
-{% endblock %}{% endblock %}
+<!-- / tab_content --></div><!-- / tab -->{% include "footer.html.twig" %}{% block javascripts %}
+<script src="/js/tab.js"></script>{% endblock %}{% endblock %}

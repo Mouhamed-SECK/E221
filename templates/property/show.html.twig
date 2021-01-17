@@ -14,9 +14,8 @@
 					<div class="ps-item-inner large-item set-bg" data-setbg="{{image.url}}"></div>
 				</div>
 			{% endfor %}
-
-
 		</div>
+
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 mx-auto">
@@ -25,7 +24,7 @@
 							<div class="col-lg-6">
 								<div class="pd-title">
 
-									<div class="label">For rent</div>
+									<div class="label">{{property.stringUsageType}}</div>
 									<div class="pt-price">{{property.price}}
 										FCFA<span>/mois</span>
 									</div>
@@ -36,23 +35,13 @@
 								</div>
 							</div>
 							<div class="col-lg-6">
-								<div class="pd-social">
-									<a href="#">
-										<i class="fa fa-mail-forward"></i>
-									</a>
-									<a href="#">
-										<i class="fa fa-send"></i>
-									</a>
-									<a href="#">
-										<i class="fa fa-heart"></i>
-									</a>
-									<a href="#">
-										<i class="fa fa-mail-forward"></i>
-									</a>
-									<a href="#">
-										<i class="fa fa-cloud-download"></i>
-									</a>
-								</div>
+								{% if app.user and app.user == property.getPropertyOwner %}
+									<a href="{{path('property.edit', {id: property.id, slug: property.slug})}}" style='margin-left: 193px;' class="site-btn">Editer Votre Bien</a>
+
+								{% else %}
+									<a href="{{path('booking.create', {id: property.id, slug: property.slug})}}" style='margin-left: 193px;' class="site-btn">Faire Une Réservation</a>
+
+								{% endif %}
 							</div>
 						</div>
 						<div class="pd-board">
