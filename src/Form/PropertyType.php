@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use    Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PropertyType extends ApplicationType
 {
@@ -28,8 +30,8 @@ class PropertyType extends ApplicationType
             )
             ->add(
                 'description',
-                TextType::class,
-                $this->getConfiguration('Description', 'Entrez la description'),
+                TextareaType::class,
+                $this->getConfiguration('Description', 'Entrez la description', 'texteditor-content'),
             )
             ->add(
                 'price',
@@ -66,7 +68,16 @@ class PropertyType extends ApplicationType
                 TextType::class,
                 $this->getConfiguration('Code Postal', 'Entrez le code Postal'),
             )
-
+            ->add(
+                'usageType',
+                ChoiceType::class,
+                array_merge($this->getConfiguration('Type d\'usage', ''), [
+                    'choices' => [
+                        'Burreau' => 0,
+                        'Logement' => 1,
+                    ],
+                ])
+            )
             ->add('duration')
             ->add(
                 'CoverImage',
