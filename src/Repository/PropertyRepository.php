@@ -40,6 +40,22 @@ class PropertyRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findAcceptedProperty(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.status != 0')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPropertyManagementRequest(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.status = 0')
+            ->getQuery()
+            ->getResult();
+    }
+
     private function findVisibleQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('p')

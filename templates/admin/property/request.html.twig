@@ -1,0 +1,72 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration
+{% endblock %}
+
+{% block body %}
+	<!-- DataTales Example -->
+
+	<div class="card shadow mb-4">
+		<div class="card-header py-3">
+			<h6 class="m-0 font-weight-bold text-primary">Listes des Propriétes</h6>
+		</div>
+		<div class="card-body w-100">
+			<div class="table-responsive">
+				<table class="table table-bordered  w-100" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+
+							<th>Nom Propriétaires</th>
+							<th>Prenom Propriétaires</th>
+							<th>Prix /mois</th>
+							<td>Type d'Usage</td>
+							<th>Suraface</th>
+							<th>Nombres Piéces</th>
+							<th>Nombre Chambre</th>
+							<th>City</th>
+							<th>Adrresse</th>
+
+							<th style='width:120px;'>Action</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for property in properties %}
+							<tr>
+
+								<td>{{property.PropertyOwner.name}}</td>
+								<td>{{property.PropertyOwner.firstName}}</td>
+								<td>{{property.price}}</td>
+								<td>{{property.stringUsageType}}</td>
+								<td>{{property.surface}}</td>
+								<td>{{property.rooms}}</td>
+								<td>{{property.badrooms}}</td>
+								<td>{{property.city}}</td>
+								<td>{{property.address}}</td>
+
+								<td>
+									<a title="voir sur le site" href="">
+										<i class="fa fa-eye text-secondary"></i>
+									</a>
+									<a title="Valider Demande" href={{path('admin.property.validate', {id: property.id, slug: property.slug} )}}>
+										<i class="fa fa-check"></i>
+									</a>
+									<a href="">
+										<i title="Refuser Demande" class="fa fa-times text-danger"></i>
+									</a>
+									<a href="">
+										<i itle="Mettre en attente Demande" class="fas text-warning fa-hourglass-half"></i>
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

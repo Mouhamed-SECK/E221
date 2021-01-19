@@ -325,6 +325,17 @@ input[type='checkbox']:not(old):checked + label > span:before {
   font-family: 'Material-Design-Iconic-Font';
   font-weight: bold;
 }
+.site-btn {
+  font-size: 14px;
+  color: #ffffff;
+  background: #00c89e;
+  border: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  padding: 14px 30px;
+}
 
 .label-agree-term {
   font-size: 12px;

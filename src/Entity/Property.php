@@ -393,7 +393,7 @@ class Property
         return $this;
     }
 
-    public function getStausValue(): string
+    public function getStatusValue(): string
     {
         return self::STATUS[$this->status];
     }
