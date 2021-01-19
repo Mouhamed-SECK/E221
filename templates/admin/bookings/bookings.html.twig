@@ -1,0 +1,80 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration
+{% endblock %}
+
+{% block body %}
+	<!-- DataTales Example -->
+
+	<div class="card shadow mb-4">
+		<div class="card-header py-3">
+			<h6 class="m-0 font-weight-bold text-primary">Listes des Propriétes</h6>
+		</div>
+		<div class="card-body w-100">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="filter">Rechercher</span>
+				</div>
+				<input type="text" class="form-control" data-table="table" data-count="#count" placeholder="Rechercher par T'ype d'usage, Nom propriétaire, surface..." aria-label="Rechercher" aria-describedby="filter">
+			</div>
+			<div class="table-responsive">
+				<table class="table table-bordered  w-100" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+
+							<th>Nom Client</th>
+							<th>Prenom Client</th>
+							<th>Mail du Client</th>
+							<td>Date de réservation</td>
+							<th>Prix /mois</th>
+							<th>Type  d'usage</th>
+							<th>Surface</th>
+							<th>City</th>
+							<th>Adrresse</th>
+
+							<th style='width:120px;'>Action</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for book in bookings %}
+							<tr>
+
+								<td>{{book.booker.name}}</td>
+								<td>{{book.booker.firstName}}</td>
+								<td>{{book.booker.email}}</td>
+								<td>{{book.createdAt | format_datetime()}}</td>
+								<td>{{book.property.price}}</td>
+								<td>{{book.property.stringUsageType}}</td>
+								<td>{{book.property.surface}}</td>
+								<td>{{book.property.city}}</td>
+								<td>{{book.property.address}}</td>
+
+								<td>
+									<a title="voir sur le site" href="{{path('property.show', {id: book.property.id, slug: book.property.slug})}}" target="_blank">
+										<i class="fa fa-eye text-secondary"></i>
+									</a>
+									<a title="Valider Demande" href={{path('admin.booking.response', {action : 'validate', id: book.id} )}}>
+										<i class="fa fa-check"></i>
+									</a>
+									<a href="{{path('admin.booking.response', {action : 'refuse', id: book.id} )}}">
+										<i title="Refuser Demande" class="fa fa-times text-danger"></i>
+									</a>
+									<a href="">
+										<i itle="Mettre en attente Demande" class="fas text-warning fa-hourglass-half"></i>
+									</a>
+								</td>
+							</tr>
+						{% endfor %}
+
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	{% block javascripts %}
+		<script src="/js/filter.js"></script>
+	{% endblock %}
+{% endblock %}

@@ -18,7 +18,7 @@ class BookingController extends AbstractController
     private $manager;
 
 
-    public function __construct(PropertyRepository $repository, EntityManagerInterface $manager)
+    public function __construct(PropertyRepository $repository,  EntityManagerInterface $manager)
     {
         $this->repository = $repository;
         $this->manager = $manager;

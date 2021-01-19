@@ -28,13 +28,13 @@ class Booking
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bookings")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bookings", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $booker;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Property::class, inversedBy="bookings")
+     * @ORM\ManyToOne(targetEntity=Property::class, inversedBy="bookings",  fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $property;
