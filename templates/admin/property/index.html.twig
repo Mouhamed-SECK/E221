@@ -11,45 +11,69 @@
 			<h6 class="m-0 font-weight-bold text-primary">Listes des Propriétes</h6>
 		</div>
 		<div class="card-body w-100">
-			<div class="table-responsive">
-				<table class="table table-bordered  w-100" id="dataTable" width="100%" cellspacing="0">
-					<thead>
-						<tr>
-							<th>id</th>
-							<th>Propriétaires</th>
-							<th>Suraface</th>
-							<th>Reservations</th>
-							<th>Addresse</th>
-							<td>Statut</td>
-							<th>Action</th>
-						</tr>
-					</thead>
-
-					<tbody>
-						{% for property in properties %}
+			<div class="card-body w-100">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="filter">Rechercher</span>
+					</div>
+					<input type="text" class="form-control" data-table="table" data-count="#count" placeholder="Rechercher par T'ype d'usage, Nom propriétaire, surface..." aria-label="Rechercher" aria-describedby="filter">
+				</div>
+				<div class="table-responsive">
+					<table class="table table-bordered  w-100" id="dataTable" width="100%" cellspacing="0">
+						<thead>
 							<tr>
-								<td>{{property.id}}</td>
-								<td>{{property.PropertyOwner.name}}</td>
-								<td>{{property.surface}}</td>
-								<td>{{property.bookings | length}}</td>
-								<td>{{property.address}}</td>
-								<td>{{property.statusValue}}</td>
-
-								<td>
-
-									<a href="">
-										<i class="fa fa-edit"></i>
-									</a>
-								</td>
+								<th>id</th>
+								<th>Propriétaires</th>
+								<th>Suraface</th>
+								<th>Reservations</th>
+								<th>Addresse</th>
+								<td>Statut</td>
+								<th>Action</th>
 							</tr>
-						{% endfor %}
-in
+						</thead>
 
-					</tbody>
-				</table>
+						<tbody>
+							{% for property in properties %}
+								<tr>
+									<td>{{property.id}}</td>
+									<td>{{property.PropertyOwner.name}}</td>
+									<td>{{property.surface}}</td>
+									<td>{{property.bookings | length}}</td>
+									<td>{{property.address}}</td>
+									<td>{{property.statusValue}}</td>
+
+									<td>
+
+										<a href="">
+											<i class="fa fa-edit"></i>
+										</a>
+									</td>
+								</tr>
+							{% endfor %}
+
+						</tbody>
+					</table>
+					<div class="d-flex justify-content-center">
+						<ul class="pagination">
+							<li class=" page-item previous {% if page == 1 %} disabled {% endif %}">
+								<a href="{{path('admin.property.index', {'page' : page - 1})}}" class="page-link">Précédent</a>
+							</li>
+							{% for i in 1..pages %}
+								<li class="page-item {% if page == i %} active {% endif %}">
+									<a href="{{path('admin.property.index', {'page' : i})}}" class="page-link">{{i}}</a>
+								</li>
+							{% endfor %}
+
+							<li class="page-item  disabled">
+								<a href="#" class="page-link {% if page == pages %} disabled {% endif %}">Suivant</a>
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
 
-
-{% endblock %}
+		{% block javascripts %}
+			<script src="/js/filter.js"></script>
+		{% endblock %}
+	{% endblock %}

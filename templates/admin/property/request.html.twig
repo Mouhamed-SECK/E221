@@ -11,6 +11,12 @@
 			<h6 class="m-0 font-weight-bold text-primary">Listes des Propriétes</h6>
 		</div>
 		<div class="card-body w-100">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="filter">Rechercher</span>
+				</div>
+				<input type="text" class="form-control" data-table="table" data-count="#count" placeholder="Rechercher par T'ype d'usage, Nom propriétaire, surface..." aria-label="Rechercher" aria-describedby="filter">
+			</div>
 			<div class="table-responsive">
 				<table class="table table-bordered  w-100" id="dataTable" width="100%" cellspacing="0">
 					<thead>
@@ -45,13 +51,13 @@
 								<td>{{property.address}}</td>
 
 								<td>
-									<a title="voir sur le site" href="">
+									<a title="voir sur le site" href="{{path('property.show', {id: property.id, slug: property.slug})}}" target="_blank">
 										<i class="fa fa-eye text-secondary"></i>
 									</a>
-									<a title="Valider Demande" href={{path('admin.property.validate', {id: property.id, slug: property.slug} )}}>
+									<a title="Valider Demande" href={{path('admin.property.response', {action : 'validate', id: property.id, slug: property.slug} )}}>
 										<i class="fa fa-check"></i>
 									</a>
-									<a href="">
+									<a href="{{path('admin.property.response', {action : 'refuse', id: property.id, slug: property.slug} )}}">
 										<i title="Refuser Demande" class="fa fa-times text-danger"></i>
 									</a>
 									<a href="">
@@ -68,5 +74,7 @@
 		</div>
 	</div>
 
-
+	{% block javascripts %}
+		<script src="/js/filter.js"></script>
+	{% endblock %}
 {% endblock %}
