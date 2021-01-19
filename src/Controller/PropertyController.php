@@ -96,7 +96,7 @@ class PropertyController extends AbstractController
     }
     /**
      * @Route("/biens/{slug}-{id}/edit" , name="property.edit" , requirements={"slug": "[a-z0-9\-]*"})
-     * @Security("is_granted('ROLE_USER') and user === property.getPropertyOwner()", message="Cette annonce ne vous appartient pas vous ne pouvez pas la modifier")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function edit(int $id, string $slug, Request $request): Response
     {
