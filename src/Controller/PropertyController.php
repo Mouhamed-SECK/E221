@@ -52,13 +52,26 @@ class PropertyController extends AbstractController
     public function create(Request $request, EntityManagerInterface $manager)
     {
         $property = new Property();
-        $form = $this->createForm(PropertyType::class, $property);
+        $form = $this->createForm(PropertyType::class, $property);     
         $form->handleRequest($request);
+       
 
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($property->getImages() as $image) {
-                $image->setProperty($property);
-                $manager->persist($image);
+            $imagesFile = $form->get('images')->getData();
+
+            foreach ($imagesFile as $image) {
+                $file = md5(uniqid()).'.'.$image->guessExtension();
+
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $file
+                );         
+             
+                $image = new Image();
+                $image->setUrl($file);
+                $image->setCaption("Image d'une propeiété");
+                $property->addImage($image);
+             
             }
 
             $property->setStatus(0);

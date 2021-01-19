@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use    Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PropertyType extends ApplicationType
 {
@@ -86,11 +87,12 @@ class PropertyType extends ApplicationType
             )
             ->add(
                 'images',
-                CollectionType::class,
+                FileType::class,
                 [
-                    'entry_type' => ImageType::class,
-                    'allow_add' => true,
-                    'allow_delete' => true
+                    'label' => "Ajouter des images",
+                    'multiple' => true,
+                    'mapped' => false,
+                    'required' => false
                 ]
             );
     }

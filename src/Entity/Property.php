@@ -24,6 +24,7 @@ class Property
     const STATUS = [
         0 => 'Nouvelle Demande',
         1 => 'Demande Accepté',
+        2 => 'Demande Refusé"',
         2 => 'En Reflexion',
         3 => 'En Location'
     ];
@@ -111,7 +112,7 @@ class Property
     private $CoverImage;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="property", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="property", orphanRemoval=true, cascade={"persist"})
      * @Assert\Valid()
      */
     private $images;
