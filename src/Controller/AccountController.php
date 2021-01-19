@@ -14,6 +14,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
+
 class AccountController extends AbstractController
 {
     /**
@@ -53,6 +54,7 @@ class AccountController extends AbstractController
             $user->setHash($hash);
             $manager->persist($user);
             $manager->flush();
+            return $this->redirectToRoute('account.login');
         }
 
         return  $this->render('account/signup.html.twig', [
